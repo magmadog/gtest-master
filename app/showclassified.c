@@ -11,7 +11,7 @@
 #include "common.h"
 #include "text/text.h"
 #include <ctype.h>
-void showclassified_line(int index, char *contents);
+static void showclassified_line(int index, char *contents);
 
 /**
  * Выводит вместо букв звездочки
@@ -30,7 +30,7 @@ void showclassified(text txt)
 /**
  * Выводит содержимое указанного файла на экран
  */
-void showclassified_line(int index, char *contents)
+static void showclassified_line(int index, char *contents)
 {
     /* Функция обработчик всегда получает существующую строку */
     assert(contents != NULL);

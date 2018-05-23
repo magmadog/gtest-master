@@ -12,8 +12,12 @@
 #include "common.h"
 #include <string.h>
 
-void s(text txt){
+void s(text txt,char *new_str){
 
+    char line[MAXLINE + 1];
+    strncpy(line, new_str, MAXLINE);
+    strncat(line, "\n", MAXLINE - strlen(line));
+    
     /* Сохраняем позицию курсора */
     int ps = txt->cursor->position;
     node* ln = txt->cursor->line;

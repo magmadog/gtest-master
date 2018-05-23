@@ -11,7 +11,7 @@
 #include "common.h"
 #include "text/text.h"
 
-void show_line(int index, char *contents);
+static void show_line(int index, char *contents);
 
 /**
  * Выводит содержимое указанного файла на экран
@@ -29,7 +29,7 @@ void show(text txt)
 /**
  * Выводит содержимое указанного файла на экран
  */
-void show_line(int index, char *contents)
+static void show_line(int index, char *contents)
 {
     /* Функция обработчик всегда получает существующую строку */
     assert(contents != NULL);

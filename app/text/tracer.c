@@ -46,10 +46,6 @@ int currentline(text txt){
     return -1;
 }
 
-/* Удаляет строку перед текущей */
-void rp(text txt){
-	delete_line(txt, currentline(txt)-1);
-}
 /**
  * Удаляет первую строку
  * @param txt
@@ -74,9 +70,3 @@ void rh(text txt)
 
 }
 
-/*Перемещает строку в конец файла*/
-void ce(text txt){
-    int line = currentline(txt);
-    append_line(txt,txt->cursor->line->contents); 
-	delete_line(txt, line);
-}

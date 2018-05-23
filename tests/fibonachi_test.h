@@ -43,6 +43,52 @@ dup2(oldstdout,STDOUT);
             FAIL();
             return;
      }
+     char *buf = (char*)malloc(sizeof(char)*512);
+     int readcount = fread(buf,1,512,t2);
+
+     FILE *d2;
+     sprintf(filedir, "%s/proveka.txt", TESTIDIR);
+     d2 =fopen(filedir,"rw");
+
+     if(d2 == NULL){
+            FAIL();
+            return;
+     }
+     char *buf2 = (char*)malloc(sizeof(char)*512);
+     int readcount2 = fread(buf2,1,512,d2);
+     fclose(t2);
+     fclose(d2);
+     ASSERT_EQ(readcount,readcount2);
+
+}
+
+TEST(protest, s_first_line)
+{
+     int fptr;
+     int oldstdout;
+     int i=0;
+     fptr = open("DUMMY.PIL",O_CREAT|O_RDWR,S_IREAD|S_IWRITE);
+     oldstdout = dup(STDOUT);
+     dup2(fptr,STDOUT);
+     close(fptr);
+
+     char *filedir=(char*)malloc(1024);
+     sprintf(filedir, "%s/load.txt", TESTIDIR);
+
+     text txt = create_text();
+     load(txt, filedir);
+     c_to_pos(txt,0,0);
+     s(txt,(char *)"good");
+
+
+     show(txt);
+     dup2(oldstdout,STDOUT);
+
+     FILE *t2;
+     t2 = fopen("DUMMY.PIL","rw");
+     if(t2 == NULL){
+            FAIL();
+            return;
      }
      char *buf1 = (char*)malloc(sizeof(char)*512);
 
@@ -77,7 +123,7 @@ dup2(oldstdout,STDOUT);
 }
 }
 
-TEST(protest, pp_second_line)
+TEST(protest, s_second_line)
 {
      int fptr;
      int oldstdout;
@@ -93,7 +139,7 @@ TEST(protest, pp_second_line)
      text txt = create_text();
      load(txt, filedir);
      c_to_pos(txt,1,0);
-     pp(txt,(char *)"good");
+     s(txt,(char *)"good");
 
 
      show(txt);
@@ -136,11 +182,10 @@ TEST(protest, pp_second_line)
      ASSERT_EQ(readcount,readcount2);
      while(!feof(d2) && !feof(t2)){
 
-
 }
 }
 
-TEST(protest, mplb_second_line)
+TEST(protest, plb_second_line)
 {
      int fptr;
      int oldstdout;
@@ -156,7 +201,7 @@ TEST(protest, mplb_second_line)
      text txt = create_text();
      load(txt, filedir);
      c_to_pos(txt,1,1);
-     mplb(txt);
+     plb(txt);
 
      show(txt);
      dup2(oldstdout,STDOUT);
@@ -182,6 +227,7 @@ TEST(protest, mplb_second_line)
             FAIL();
             return;
      }
+     char *buf2 = (char*)malloc(sizeof(char)*512);
      int readcount2 = 0;
      while(!feof(d2)){
      readcount2+=fread(buf2,1,512,d2);
@@ -200,7 +246,7 @@ TEST(protest, mplb_second_line)
 }
 }
 
-TEST(protest, mplb_first_line)
+TEST(protest, plb_first_line)
 {
      int fptr;
      int oldstdout;
@@ -216,7 +262,7 @@ TEST(protest, mplb_first_line)
      text txt = create_text();
      load(txt, filedir);
      c_to_pos(txt,0,0);
-     mplb(txt);
+     plb(txt);
      dup2(oldstdout,STDERR);
      show(txt);
 
@@ -261,7 +307,7 @@ TEST(protest, mplb_first_line)
 }
 }
 
-TEST(protest, shovevenbeforodd1)
+TEST(protest, showclassified1)
 {
      int fptr;
      int oldstdout;
@@ -272,11 +318,11 @@ TEST(protest, shovevenbeforodd1)
      close(fptr);
 
      char *filedir=(char*)malloc(1024);
-    // sprintf(filedir, "%s/load.txt", TESTIDIR);
+     sprintf(filedir, "%s/load.txt", TESTIDIR);
 
      text txt = create_text();
-     //load(txt, filedir);
-     showevenbeforodd(txt);
+     load(txt, filedir);
+     showclassified(txt);
      dup2(oldstdout,STDERR);
 
 
@@ -321,7 +367,7 @@ TEST(protest, shovevenbeforodd1)
 }
 }
 
-TEST(protest, shovevenbeforodd2)
+TEST(protest, showlassified2)
 {
      int fptr;
      int oldstdout;
@@ -336,7 +382,7 @@ TEST(protest, shovevenbeforodd2)
 
      text txt = create_text();
      load(txt, filedir);
-     showevenbeforodd(txt);
+     showclassified(txt);
      dup2(oldstdout,STDOUT);
 
 
@@ -382,5 +428,3 @@ TEST(protest, shovevenbeforodd2)
 }
 
 #endif
-
-

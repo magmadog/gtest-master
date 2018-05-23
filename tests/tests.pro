@@ -14,25 +14,28 @@ QMAKE_CXXFLAGS += -fprofile-arcs -ftest-coverage
 QMAKE_CFLAGS += -fprofile-arcs -ftest-coverage
 LIBS += -lgcov
 
-DEFINES += TESTIDIR=\\\"$$PWD/../testfiles\\\"
+DEFINES += TESTIDIR=\\\"$$PWD/../testi\\\"
 
-HEADERS += fibonachi_test.h \
-    ../app/common.h \
+
+HEADERS +=  ../app/common.h \
     ../app/text/text.h \
+    fibonachi_test.h \
     ../app/text/_text.h
 
-SOURCES += main.cpp \
+SOURCES +=  main.cpp \
+    ../app/load.c \
+    ../app/save.c \
+    ../app/show.c \
+    ../app/s.c \
     ../app/text/plb.c \
+    ../app/showclassified.c \
+    ../app/shownum.c \
     ../app/text/cursors.c \
     ../app/text/append_line.c \
-    ../app/text/delete_line.c \
-    ../app/load.c \
-    ../app/s.c \
     ../app/text/create_text.c \
+    ../app/text/process_forward_extra_option.c \
     ../app/text/process_forward.c \
-    ../app/showclassified.c \
     ../app/text/remove_all.c \
-    ../app/text/tracer.c \
-    ../app/show.c
+    ../app/text/tracer.c
 
 INCLUDEPATH += ../app

@@ -164,8 +164,6 @@ void showclassified(text txt);
 /*
  * Разделяет строку с курсором на две строки
  */
-void s(text txt);
+void s(text txt,char *new_str);
 
-void showclassified_line(int index, char *contents);
-void show_line(int index, char *contents);
 #endif
