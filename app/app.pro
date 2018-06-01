@@ -10,7 +10,6 @@ SOURCES += editor.c \
     showclassified.c \
     show.c \
     text/plb.c \
-
     shownum.c \
     text/cursors.c \
     text/append_line.c \
@@ -18,7 +17,8 @@ SOURCES += editor.c \
     text/process_forward_extra_option.c \
     text/process_forward.c \
     text/remove_all.c \
-    text/tracer.c
+    text/tracer.c \
+    text/delete_line.c
 
 HEADERS += common.h \
     text/text.h \

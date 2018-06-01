@@ -66,7 +66,6 @@ TEST(protest, s_first_line)
 {
      int fptr;
      int oldstdout;
-     int i=0;
      fptr = open("DUMMY.PIL",O_CREAT|O_RDWR,S_IREAD|S_IWRITE);
      oldstdout = dup(STDOUT);
      dup2(fptr,STDOUT);
@@ -78,8 +77,7 @@ TEST(protest, s_first_line)
      text txt = create_text();
      load(txt, filedir);
      c_to_pos(txt,0,0);
-     s(txt,(char *)"good");
-
+     s(txt);
 
      show(txt);
      dup2(oldstdout,STDOUT);
@@ -108,26 +106,19 @@ TEST(protest, s_first_line)
      char *buf2 = (char*)malloc(sizeof(char)*512);
      int readcount2 = 0;
      while(!feof(d2)){
-     readcount2+=fread(buf2,1,512,d2);
-        }
-         for(i=0;i<512;i++){
-             if(buf1[i] != buf2[i])
-                 FAIL();
-}
+        readcount2+=fread(buf2,1,512,d2);
+     }
 
      fclose(t2);
      fclose(d2);
+     readcount += 4;
      ASSERT_EQ(readcount,readcount2);
-     while(!feof(d2) && !feof(t2)){
-
-}
 }
 
-TEST(protest, s_second_line)
+TEST(protest, s_last_line)
 {
      int fptr;
      int oldstdout;
-     int i=0;
      fptr = open("DUMMY.MIL",O_CREAT|O_RDWR,S_IREAD|S_IWRITE);
      oldstdout = dup(STDOUT);
      dup2(fptr,STDOUT);
@@ -138,8 +129,7 @@ TEST(protest, s_second_line)
 
      text txt = create_text();
      load(txt, filedir);
-     c_to_pos(txt,1,0);
-     s(txt,(char *)"good");
+     s(txt);
 
 
      show(txt);
@@ -171,26 +161,19 @@ TEST(protest, s_second_line)
      while(!feof(d2)){
      readcount2+=fread(buf2,1,512,d2);
         }
-         for(i=0;i<512;i++){
-             if(buf1[i] != buf2[i])
-                 FAIL();
-}
-
 
      fclose(t2);
      fclose(d2);
+     readcount += 4;
      ASSERT_EQ(readcount,readcount2);
-     while(!feof(d2) && !feof(t2)){
 
 }
-}
 
-TEST(protest, plb_second_line)
+TEST(protest, plb_first)
 {
      int fptr;
      int oldstdout;
-     int i=0;
-     fptr = open("MPLBTEST2",O_CREAT|O_RDWR,S_IREAD|S_IWRITE);
+     fptr = open("PLBTEST1",O_CREAT|O_RDWR,S_IREAD|S_IWRITE);
      oldstdout = dup(STDOUT);
      dup2(fptr,STDOUT);
      close(fptr);
@@ -203,11 +186,11 @@ TEST(protest, plb_second_line)
      c_to_pos(txt,1,1);
      plb(txt);
 
-     show(txt);
+     //show(txt);
      dup2(oldstdout,STDOUT);
 
      FILE *t2;
-     t2 = fopen("MPLBTEST2","rw");
+     t2 = fopen("PLBTEST1","rw");
      if(t2 == NULL){
             FAIL();
             return;
@@ -220,40 +203,29 @@ TEST(protest, plb_second_line)
         }
      FILE *d2;
 
-     sprintf(filedir, "%s/mplb_second_line.txt", TESTIDIR);
+     sprintf(filedir, "%s/plb_test.txt", TESTIDIR);
      d2 =fopen(filedir,"rw");
 
      if(d2 == NULL){
             FAIL();
             return;
      }
-     char *buf2 = (char*)malloc(sizeof(char)*512);
-     int readcount2 = 0;
-     while(!feof(d2)){
-     readcount2+=fread(buf2,1,512,d2);
-        }
-         for(i=0;i<512;i++){
-             if(buf1[i] != buf2[i])
-                 FAIL();
-
-}
+     int readcount2 = pos_return(txt) + 1;
 
      fclose(t2);
      fclose(d2);
      ASSERT_EQ(readcount,readcount2);
-     while(!feof(d2) && !feof(t2)){
 
 }
-}
 
-TEST(protest, plb_first_line)
+
+TEST(protest, plb_second)
 {
      int fptr;
      int oldstdout;
-     int i=0;
-     fptr = open("MplbTest1",O_CREAT|O_RDWR,S_IREAD|S_IWRITE);
-     oldstdout = dup(STDERR);
-     dup2(fptr,STDERR);
+     fptr = open("PLBTEST2",O_CREAT|O_RDWR,S_IREAD|S_IWRITE);
+     oldstdout = dup(STDOUT);
+     dup2(fptr,STDOUT);
      close(fptr);
 
      char *filedir=(char*)malloc(1024);
@@ -261,14 +233,13 @@ TEST(protest, plb_first_line)
 
      text txt = create_text();
      load(txt, filedir);
-     c_to_pos(txt,0,0);
+     c_to_pos(txt,1,6);
      plb(txt);
-     dup2(oldstdout,STDERR);
-     show(txt);
 
+     dup2(oldstdout,STDOUT);
 
      FILE *t2;
-     t2 = fopen("MplbTest1","rw");
+     t2 = fopen("PLBTEST2","rw");
      if(t2 == NULL){
             FAIL();
             return;
@@ -279,99 +250,19 @@ TEST(protest, plb_first_line)
      while(!feof(t2)){
      readcount+=fread(buf1,1,512,t2);
         }
-     FILE *d2;
 
-     sprintf(filedir, "%s/mplb_first_line.txt", TESTIDIR);
-     d2 =fopen(filedir,"rw");
-
-     if(d2 == NULL){
-            FAIL();
-            return;
-     }
-     char *buf2 = (char*)malloc(sizeof(char)*512);
-     int readcount2 = 0;
-     while(!feof(d2)){
-     readcount2+=fread(buf2,1,512,d2);
-        }
-         for(i=0;i<512;i++){
-             if(buf1[i] != buf2[i])
-                 FAIL();
-
-}
+     int readcount2 = pos_return(txt) + 1;
 
      fclose(t2);
-     fclose(d2);
      ASSERT_EQ(readcount,readcount2);
-     while(!feof(d2) && !feof(t2)){
 
 }
-}
 
-TEST(protest, showclassified1)
+
+TEST(protest, showlassified)
 {
      int fptr;
      int oldstdout;
-     int i=0;
-     fptr = open("SEBO1",O_CREAT|O_RDWR,S_IREAD|S_IWRITE);
-     oldstdout = dup(STDERR);
-     dup2(fptr,STDERR);
-     close(fptr);
-
-     char *filedir=(char*)malloc(1024);
-     sprintf(filedir, "%s/load.txt", TESTIDIR);
-
-     text txt = create_text();
-     load(txt, filedir);
-     showclassified(txt);
-     dup2(oldstdout,STDERR);
-
-
-     FILE *t2;
-     t2 = fopen("SEBO1","rw");
-     if(t2 == NULL){
-            FAIL();
-            return;
-     }
-     char *buf1 = (char*)malloc(sizeof(char)*512);
-
-     int readcount =  0;
-     while(!feof(t2)){
-     readcount+=fread(buf1,1,44,t2);
-        }
-     FILE *d2;
-
-     sprintf(filedir, "%s/SEBO_TEST1.txt", TESTIDIR);
-     d2 =fopen(filedir,"rw");
-
-     if(d2 == NULL){
-            FAIL();
-            return;
-     }
-     char *buf2 = (char*)malloc(sizeof(char)*512);
-     int readcount2 = 0;
-     while(!feof(d2)){
-     readcount2+=fread(buf2,1,44,d2);
-        }
-         for(i=0;i<44;i++){
-             if(buf1[i] != buf2[i])
-                 ASSERT_EQ(i,0);
-                 //FAIL();
-
-}
-
-     fclose(t2);
-     fclose(d2);
-     ASSERT_EQ(readcount,readcount2);
-     while(!feof(d2) && !feof(t2)){
-
-}
-}
-
-TEST(protest, showlassified2)
-{
-     int fptr;
-     int oldstdout;
-     int i=0;
      fptr = open("SEBO2",O_CREAT|O_RDWR,S_IREAD|S_IWRITE);
      oldstdout = dup(STDOUT);
      dup2(fptr,STDOUT);
@@ -408,23 +299,14 @@ TEST(protest, showlassified2)
             return;
      }
      char *buf2 = (char*)malloc(sizeof(char)*512);
-     int readcount2 = 0;
+     int readcount2 = 1;
      while(!feof(d2)){
      readcount2+=fread(buf2,1,512,d2);
         }
-         for(i=0;i<44;i++){
-             if(buf1[i] != buf2[i])
-                 //ASSERT_EQ(i,0);
-                 FAIL();
-
-}
 
      fclose(t2);
      fclose(d2);
      ASSERT_EQ(readcount,readcount2);
-     while(!feof(d2) && !feof(t2)){
 
 }
-}
-
 #endif
