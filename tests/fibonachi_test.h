@@ -60,6 +60,10 @@ dup2(oldstdout,STDOUT);
      fclose(d2);
      ASSERT_EQ(readcount,readcount2);
 
+     while(!feof(d2) && !feof(t2)){
+
+}
+
 }
 
 TEST(protest, s_first_line)
@@ -111,8 +115,12 @@ TEST(protest, s_first_line)
 
      fclose(t2);
      fclose(d2);
-     readcount += 4;
+     readcount += 5;
      ASSERT_EQ(readcount,readcount2);
+     while(!feof(d2) && !feof(t2)){
+
+}
+
 }
 
 TEST(protest, s_last_line)
@@ -164,7 +172,7 @@ TEST(protest, s_last_line)
 
      fclose(t2);
      fclose(d2);
-     readcount += 4;
+     readcount += 5;
      ASSERT_EQ(readcount,readcount2);
 
 }
